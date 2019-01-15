@@ -65,7 +65,6 @@ class Input{
 	test(){
 		this.inputVal=this.inputElement.val();
 		this.testVal = this.pattern.test(this.inputVal );
-		debugger;
 		if(!this.testVal){
 			this.error = 'pattern';
 			this.object['result']=false;
@@ -105,7 +104,14 @@ class Input{
 		Don't store the CSS selector, you made the element, store the direct dom object itself!
 		*/
 	showError( message ){
-		
+		var positionTop = this.inputElement.position().top;
+		var positionLeft = this.inputElement.position().left;
+		var height = this.inputElement.height();
+		var newHeight = positionTop + height;
+		this.newDom = $('<div>').addClass('inputError').css({'left':positionLeft+'px', 'top':newHeight+'px'}).text(message);
+		console.log(this.newDom);
+		$(this.inputElement.parent()).append(this.newDom);
+
 	}
 	/*
 	hideError removes the error dom element from the DOM for the given input
@@ -115,6 +121,6 @@ class Input{
 		removes the dom element in question (https://www.w3schools.com/jquery/html_remove.asp)
 		*/
 	hideError(){
-		
+		this.newDom.remove();
 	}
 }
